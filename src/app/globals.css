@@ -99,3 +99,11 @@ body {
     display: none !important;
   }
 }
+
+@media print {
+  /* En papel el vídeo es su fotograma fijo con el QR al lado: el botón de
+     reproducir no pinta nada en una hoja impresa. */
+  .control-video {
+    display: none !important;
+  }
+}

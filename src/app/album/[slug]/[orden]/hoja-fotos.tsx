@@ -8,6 +8,7 @@ import {
   type Papel,
 } from '@/lib/escenografia'
 import type { FotoHoja } from './hoja'
+import VideoInline from './video-inline'
 import {
   mm,
   Pagina,
@@ -126,7 +127,6 @@ export default function HojaFotos({
       {comp.fotos.map((f, i) => {
         const im = porId.get(f.id)
         if (!im) return null
-        const fuente = im.medio === 'video' ? im.posterUrl : im.url
         const conCinta = i % 2 === 0
         const conEsquinas = i === 1
         return (
@@ -153,10 +153,17 @@ export default function HojaFotos({
                 overflow: 'hidden',
               }}
             >
-              {fuente ? (
+              {im.medio === 'video' ? (
+                <VideoInline
+                  poster={im.posterUrl}
+                  fuente={im.url}
+                  titulo={im.titulo}
+                  duracion={im.duracion}
+                />
+              ) : im.url ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
-                  src={fuente}
+                  src={im.url}
                   alt={im.titulo ?? ''}
                   style={{
                     width: '100%',

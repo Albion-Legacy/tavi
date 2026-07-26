@@ -1,6 +1,7 @@
 import { PAGINA } from '@/lib/maqueta'
 import { papelDePliego, adornosDe, type Papel } from '@/lib/escenografia'
 import { mm, Pagina, PapelRasgado, Dibujo, EtiquetaQR } from './papeleria'
+import VideoInline from './video-inline'
 import type { FotoHoja } from './hoja'
 
 /** Color del post-it: un tono cálido de nota adhesiva que contraste con el
@@ -278,7 +279,6 @@ export default function HojaTexto({
                 }}
               >
                 {fotos.slice(0, n).map((im, i) => {
-                  const fuente = im.medio === 'video' ? im.posterUrl : im.url
                   const anchoFoto = alto * props[i]
                   return (
                     <div
@@ -302,10 +302,17 @@ export default function HojaTexto({
                           overflow: 'hidden',
                         }}
                       >
-                        {fuente ? (
+                        {im.medio === 'video' ? (
+                          <VideoInline
+                            poster={im.posterUrl}
+                            fuente={im.url}
+                            titulo={im.titulo}
+                            duracion={im.duracion}
+                          />
+                        ) : im.url ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img
-                            src={fuente}
+                            src={im.url}
                             alt={im.titulo ?? ''}
                             style={{
                               width: '100%',
